@@ -1,0 +1,49 @@
+
+--attach '/home/thilo/.mozilla/firefox/3nrbcdro.thilo/cookies.sqlite' as coo;
+attach 'cookies.sqlite' as coo;
+attach '@@DATABASE@@' as bwl;
+
+
+select 
+name, value, host, path, 
+datetime(moz_cookies.expiry,'unixepoch','localtime') , 
+datetime(moz_cookies.lastAccessed/1000000,'unixepoch','localtime') , 
+datetime(moz_cookies.creationTime/1000000,'unixepoch','localtime') 
+--delete 
+--------main--------
+from 
+coo.moz_cookies 
+where 
+coo.moz_cookies.id in (
+	select ct.id from coo.moz_cookies ct inner join bwl.moz_bwl wt where 
+		wt.execute_this_entry=1 and trim(wt.action)='delete' and 
+--		(wt.baseDomain is NULL or upper(trim(ct.baseDomain)) like '%'||upper(trim(wt.baseDomain))||'%') and
+		(wt.name is NULL or upper(trim(ct.name)) like '%'||upper(trim(wt.name))||'%') and
+		(wt.value is NULL or upper(trim(ct.value)) like '%'||upper(trim(wt.value))||'%') and
+		(wt.host is NULL or upper(trim(ct.host)) like '%'||upper(trim(wt.host))||'%') and
+		(wt.expiry_later_than is NULL or cast( strftime('%s','now',trim(wt.expiry_later_than)) as integer)<ct.expiry) and --tested
+		(wt.expiry_earlier_than is NULL or cast( strftime('%s','now',trim(wt.expiry_earlier_than)) as integer)>ct.expiry) and --tested
+		(wt.lastAccessed_later_than is NULL or cast( strftime('%s','now',trim(wt.lastAccessed_later_than)) as integer)<ct.lastAccessed/1000000) and --tested
+		(wt.lastAccessed_earlier_than is NULL or cast( strftime('%s','now',trim(wt.lastAccessed_earlier_than)) as integer)>ct.lastAccessed/1000000) and --tested
+		(wt.creationTime_later_than is NULL or cast( strftime('%s','now',trim(wt.creationTime_later_than)) as integer)<ct.creationTime/1000000) and
+		(wt.creationTime_earlier_than is NULL or cast( strftime('%s','now',trim(wt.creationTime_earlier_than)) as integer)>ct.creationTime/1000000) and
+		1=1) and
+coo.moz_cookies.id not in (
+	select ct.id from coo.moz_cookies ct inner join bwl.moz_bwl wt where 
+		wt.execute_this_entry=1 and trim(wt.action)='keep' and 
+--		(wt.baseDomain is NULL or upper(trim(ct.baseDomain)) like '%'||upper(trim(wt.baseDomain))||'%') and
+		(wt.name is NULL or upper(trim(ct.name)) like '%'||upper(trim(wt.name))||'%') and
+		(wt.value is NULL or upper(trim(ct.value)) like '%'||upper(trim(wt.value))||'%') and
+		(wt.host is NULL or upper(trim(ct.host)) like '%'||upper(trim(wt.host))||'%') and
+		(wt.expiry_later_than is NULL or cast( strftime('%s','now',trim(wt.expiry_later_than)) as integer)<ct.expiry) and 
+		(wt.expiry_earlier_than is NULL or cast( strftime('%s','now',trim(wt.expiry_earlier_than)) as integer)>ct.expiry) and 
+		(wt.lastAccessed_later_than is NULL or cast( strftime('%s','now',trim(wt.lastAccessed_later_than)) as integer)<ct.lastAccessed/1000000) and
+		(wt.lastAccessed_earlier_than is NULL or cast( strftime('%s','now',trim(wt.lastAccessed_earlier_than)) as integer)>ct.lastAccessed/1000000) and
+		(wt.creationTime_later_than is NULL or cast( strftime('%s','now',trim(wt.creationTime_later_than)) as integer)<ct.creationTime/1000000) and
+		(wt.creationTime_earlier_than is NULL or cast( strftime('%s','now',trim(wt.creationTime_earlier_than)) as integer)>ct.creationTime/1000000) and
+		1=1) and
+1=1 ;
+
+.quit
+
+
