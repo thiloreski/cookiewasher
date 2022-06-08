@@ -47,6 +47,6 @@ select baseDomain from coo.moz_cookies; > file
 export moz_bwl to csv, put file into same csv and import
 
 Install:
-Unpack, copy the cookie-DB, usually (linux) sth like: /home/i<user>/.mozilla/firefox/<some_random_id>.<user>
+Unpack, copy the cookie-DB, usually (linux) sth like: /home/<user>/.mozilla/firefox/<some_random_id>.<user>
 from FF to local dir and run FF_cookie_pattern_washer.sh
 watch output
