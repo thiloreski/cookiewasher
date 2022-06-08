@@ -46,8 +46,10 @@ How-to create a list of cookies from wanted or unwanted domains:
 select baseDomain from coo.moz_cookies; > file
 export moz_bwl to csv, put file into same csv and import
 
-Install does all this in a seperated dir, with FF off:
-Unpack, copy the cookie-DB, usually (linux) sth like: /home/<user_name>/.mozilla/firefox/<some_random_id>.<user_name>
+Current state:
+I wrapped a shell script around the plain SQL to gibre hints, do some Backup etc.
+Installation: copy all this in a seperated dir, adapt the path in the shell script, end FF.
+Then unpack, copy the cookie-DB, usually (linux) sth like: /home/<user_name>/.mozilla/firefox/<some_random_id>.<user_name>
 from FF to local dir and run FF_cookie_pattern_washer.sh
 
 Watch output
