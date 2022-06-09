@@ -36,10 +36,9 @@ Complete List of attributes:
 
 After working with the BWL, I found out that the most challenging issue is to define what I want.
 I came up with this:
-b) I want to keep a cookie related to session user login in name or value if
-                       it has been accessed less than 30 mins ago
-c) all other cookies are just kept 10 mins                        
-d) cookies that expire later than 1 hour are to be deleted
+a) I want to keep all cookies related to session user login or value if it has been accessed less than 30 mins ago. This should be tackled different on different web-sites(different user names....)
+b) all other cookies are just kept 10 mins after creation
+
 
 Hint:
 How-to create a list of cookies from wanted or unwanted domains:
