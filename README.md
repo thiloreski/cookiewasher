@@ -38,6 +38,7 @@ After working with the BWL, I found out that the most challenging issue is to de
 I came up with this:
 a) I want to keep all cookies related to session user login or value if it has been accessed less than 30 mins ago. This should be tackled different on different web-sites(different user names....)
 b) all other cookies are just kept 10 mins after creation
+c) exemptions to b) are in the whitelist
 
 
 Hint:
