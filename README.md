@@ -6,7 +6,7 @@ Examples:
 2. Delete all cookies that expire not earlier than next month.
 3. Despite the above two rules, keep all cookies which concern session login information until at least 30 mins after creationtime.
 
-So create blackist patterns (no 1 and no 2 above) plus (dominating) whitelist pattern (no 3 above) pattern.
+So create blackist patterns (no 1 and no 2 above) plus (dominating) whitelist pattern (no 3 above).
 
 Easyest implementation is to have the black list and the white list as sqlite DB.
 
