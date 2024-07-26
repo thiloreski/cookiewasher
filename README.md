@@ -24,32 +24,38 @@ Complete List of attributes:
 3) action - delete, keep
 4) -8) baseDomain, originAttribure, name, value, host, path # match baseDomain from cookie DB (% operator applies)
 9) -14) for expiry, lastAccessed, creationTime: 
-    two columns each, first for a time diff (e.h. '+3 days'), second for relation: later, earlier
+   two columns each, first for a time diff (e.h. '+3 days'), second for relation: later, earlier
     
-    examnple : fire for all cookies older that 10 days: created earliert than 10 day back
+   examnple : fire for all cookies older that 10 days: created earliert than 10 day back
 
-   creationtime value: "-10" relation to creationTime value: "earlier"
-                simple rule:
-                    add value to today ('now') if date in cooke DB is 'relation' then fire
-                    i.e. today + (-10) - earlier => all cookies which have been created ealiert than 10 days ago
+   creationTime value: "-10" relation to creationTime value: "earlier"
+   simple rule:
+       add value to today ('now') if date in cooke DB is 'relation' then fire
+       i.e. today + (-10) - earlier => all cookies which have been created ealiert than 10 days ago
+   
 15) -18) isSecure, isHttpOnly, Browserelement, sameSite - match
 
 
 After working with the BWL, I found out that the most challenging issue is to define what I want.
 I came up with this:
-a) I want to keep all cookies related to session user login or value if it has been accessed less than 30 mins ago. This should be tackled different on different web-sites(different user names....)
-b) all other cookies are just kept 10 mins after creation
-c) exemptions to b) are in the whitelist
 
+a) I want to keep all cookies related to session user login or value if it has been accessed less than 30 mins ago. This should be tackled different on different web-sites(different user names....)
+
+b) all other cookies are just kept 10 mins after creation
+
+c) exemptions to b) are in the whitelist
 
 Hint:
 How-to create a list of cookies from wanted or unwanted domains:
+
 select baseDomain from coo.moz_cookies; > file
+
 export moz_bwl to csv, put file into same csv and import
 
 Current state:
 I wrapped a shell script around the plain SQL to give hints, do some Backup etc.
-Installation: copy all this in a seperated dir, adapt the path in the shell script, end FF.
+
+Installation: Copy all this in a seperated dir, adapt the path in the shell script, end FF.
 Then unpack, copy the cookie-DB, usually (linux) sth like: /home/<user_name>/.mozilla/firefox/<some_random_id>.<user_name>
 from FF to local dir and run FF_cookie_pattern_washer.sh
 
