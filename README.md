@@ -16,18 +16,20 @@ For each attribute in the cookies DB, have an attribute in the BWL.
 
 For text attributes, entries correspond to sql matching (% - all, i.e. no contstraint, %xxx - suffix xxx, etc)
 
-numeric values (e.g. dates) and addtional attribute that says "earlier", "later" resp. lt, gt, eq 
+Numeric values (e.g. dates) and addtional attribute that says "earlier", "later" resp. lt, gt, eq 
 
 Complete List of attributes:
-1) execute - yes/no     # comment out
+1) execute - yes/no     # used to comment entry out 
 2) id - id              # to better sort and group
 3) action - delete, keep
 4) -8) baseDomain, originAttribure, name, value, host, path # match baseDomain from cookie DB (% operator applies)
-9) - 14) for expiry, lastAccessed, creatinoTime: 
-    one column each giving a time diff (e.h. '+3 days') plus one additonal colum each : later, earlier
+9) - 14) for expiry, lastAccessed, creationTime: 
+    two columns each, first for a time diff (e.h. '+3 days'), second for relation: later, earlier
     
-    examnple : fire for all cookies older that 10 days:
-                        relation to creationTime value: "earlier" creationtime value: "-10"
+    examnple : fire for all cookies older that 10 days: created earliert than 10 day back
+ 
+                        relation to creationTime value: "earlier"
+   creationtime value: "-10"
                 simple rule:
                     add value to today ('now') if date in cooke DB is 'relation' then fire
                     i.e. today + (-10) - earlier => all cookies which have been created ealiert than 10 days ago
