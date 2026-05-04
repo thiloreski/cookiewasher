@@ -26,7 +26,7 @@ Complete List of attributes:
 9) -14) for expiry, lastAccessed, creationTime: 
    two columns each, first for a time diff (e.h. '+3 days'), second for relation: later, earlier
     
-   examnple : fire for all cookies older that 10 days: created earliert than 10 day back
+   example : fire for all cookies older that 10 days: created earlier than 10 day back
 
    creationTime value: "-10" relation to creationTime value: "earlier"
    simple rule:
